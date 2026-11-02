@@ -1,11 +1,10 @@
 @import "tailwindcss";
 
-/* Tokens do :root da Sprint 3. Os breakpoints mantêm os valores da Sprint 3 (992, 1200 e 1400px). */
+/* Paleta do projeto JOVI Lens (mesmos tokens do protótipo). */
 @theme {
   --color-ink: #0B0E1A;
   --color-ink-soft: #545B78;
   --color-indigo: #141B3D;
-  --color-indigo-2: #1D2650;
   --color-jovi-blue: #3B5BFF;
   --color-jovi-blue-dark: #2E4CE0;
   --color-jovi-blue-soft: #6C82FF;
@@ -15,61 +14,23 @@
   --color-mist: #AEB4D6;
   --color-ok: #2FAE66;
   --color-danger: #E5484D;
-  --color-live: #58E28A;
 
   --font-sans: "Space Grotesk", sans-serif;
-  --font-display: "Anton", sans-serif;
   --font-mono: "JetBrains Mono", monospace;
 
   --radius-card: 14px;
-  --radius-frame: 28px;
-
-  --breakpoint-lg: 62rem;
-  --breakpoint-xl: 75rem;
-  --breakpoint-2xl: 87.5rem;
-
-  --animate-scan: scan 2.6s ease-in-out infinite;
-  --animate-nudge: nudge 1.6s ease-in-out infinite;
-
-  @keyframes scan {
-    0%, 100% { top: 8%; opacity: 0; }
-    15% { opacity: 1; }
-    50% { top: 88%; opacity: 1; }
-    85% { opacity: 0; }
-  }
-
-  @keyframes nudge {
-    0%, 100% { transform: rotate(45deg) translate(0, 0); }
-    50% { transform: rotate(45deg) translate(4px, -4px); }
-  }
 }
 
 @layer base {
-  :root {
-    --gutter: 1.25rem;
-    --section-pad: 4.5rem;
-
-    @variant md {
-      --gutter: 4rem;
-      --section-pad: 6rem;
-    }
-    @variant lg {
-      --gutter: 5rem;
-      --section-pad: 7rem;
-    }
-    @variant xl {
-      --gutter: 6rem;
-      --section-pad: 8rem;
-    }
-    @variant 2xl {
-      --gutter: 9rem;
-      --section-pad: 9rem;
-    }
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
   }
 
-  /* O preflight usa line-height 1.5; a Sprint 3 usava o padrão do navegador. */
-  html {
-    line-height: normal;
+  body {
+    background: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
   }
 
   button:not(:disabled) {

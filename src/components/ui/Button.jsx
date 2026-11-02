@@ -1,18 +1,21 @@
 const variants = {
-  primary: 'border-transparent bg-jovi-blue text-white hover:bg-jovi-blue-dark',
-  ghost: 'border-current hover:bg-white/8',
+  primary: 'bg-jovi-blue text-white hover:bg-jovi-blue-dark',
+  secondary: 'border border-paper-line bg-white text-ink hover:border-jovi-blue hover:text-jovi-blue',
+  ghost: 'text-ink-soft hover:bg-paper hover:text-ink',
+  danger: 'text-danger hover:bg-danger/10',
 }
 
-export default function Button({ href, variant = 'primary', block = false, children, ...props }) {
-  const Tag = href ? 'a' : 'button'
+const sizes = {
+  md: 'px-5 py-2.5 text-[.92rem]',
+  sm: 'px-3 py-1.5 text-[.82rem]',
+}
 
+export default function Button({ variant = 'primary', size = 'md', className = '', ...props }) {
   return (
-    <Tag
-      href={href}
-      className={`inline-flex items-center justify-center rounded-full border-[1.5px] px-[1.6rem] py-[.9rem] text-[.95rem] font-semibold transition duration-150 hover:-translate-y-0.5 disabled:pointer-events-none disabled:opacity-60 ${variants[variant]} ${block ? 'w-full' : ''}`}
+    <button
+      type="button"
+      className={`inline-flex items-center justify-center gap-2 rounded-full font-semibold transition disabled:pointer-events-none disabled:opacity-50 ${sizes[size]} ${variants[variant]} ${className}`}
       {...props}
-    >
-      {children}
-    </Tag>
+    />
   )
 }

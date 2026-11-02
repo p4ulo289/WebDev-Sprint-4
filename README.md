@@ -1,23 +1,24 @@
-# JOVI Lens — FIAP Challenge JOVI 2026
+# JOVI Lens — Acervo de estudos (FIAP Challenge JOVI 2026)
 
-Landing page da **JOVI Lens**, uma câmera com IA pensada para estudantes full-time: reconhece a matéria no quadro ou caderno, ajusta luz e foco sozinha e indica a melhor posição do celular.
+Aplicação web em **React** para guardar e organizar as capturas de estudo feitas pela JOVI Lens, a câmera com IA que reconhece a matéria no quadro ou no caderno. O usuário salva capturas, busca, organiza em álbuns, acompanha estatísticas, exporta os dados e recupera itens excluídos.
 
-Este projeto é a migração do protótipo em HTML/CSS/JS (Sprint 3) para **React**, usando componentes funcionais, props (pai → filho), `useState`, `useEffect`, `useRef`, `localStorage` e operações com o objeto `Math`.
+Este projeto usa o objetivo e a paleta de cores do protótipo das sprints anteriores e implementa o conteúdo do desafio: **central de conteúdo com busca**, **álbuns criados pelo usuário**, **histórico e estatísticas**, **lixeira com recuperação** e **exportação**.
 
-- **Repositório:** `COLE_AQUI_O_LINK_DO_GITHUB`
+- **Repositório (GitHub):** `COLE_AQUI_O_LINK_DO_GITHUB`
 - **Deploy (Vercel):** `COLE_AQUI_O_LINK_DA_VERCEL`
 
 ## Tecnologias utilizadas
 
-- [React 19](https://react.dev/) (componentes funcionais e hooks)
-- [Vite 7](https://vite.dev/) (servidor de desenvolvimento e build)
-- [Tailwind CSS 4](https://tailwindcss.com/) (estilização, com os tokens de cor, tipografia e breakpoints da Sprint 3)
-- Fontes do Google Fonts: Space Grotesk, Anton e JetBrains Mono
-- Git / GitHub (versionamento) e Vercel (deploy)
+- [React 19](https://react.dev/) — componentes funcionais, props (pai → filho) e hooks (`useState`)
+- [Vite 7](https://vite.dev/) — servidor de desenvolvimento e build
+- [Tailwind CSS 4](https://tailwindcss.com/) — estilização com a paleta do projeto definida em `src/index.css`
+- `localStorage` do navegador — persistência dos dados (sem back-end)
+- Fontes Space Grotesk e JetBrains Mono (Google Fonts)
+- Git / GitHub e Vercel
 
 ## Como instalar as dependências
 
-Pré-requisito: [Node.js](https://nodejs.org/) 20 ou superior (inclui o npm).
+Pré-requisito: [Node.js](https://nodejs.org/) 20 ou superior (já inclui o npm).
 
 ```bash
 npm install
@@ -31,9 +32,9 @@ Modo de desenvolvimento:
 npm run dev
 ```
 
-Abra o endereço mostrado no terminal (normalmente http://localhost:5173).
+Abra o endereço exibido no terminal (normalmente http://localhost:5173).
 
-Build de produção e pré-visualização local:
+Build de produção e pré-visualização:
 
 ```bash
 npm run build
@@ -42,49 +43,59 @@ npm run preview
 
 ## Usuários e senhas para teste
 
-O projeto **não possui autenticação**, então não há usuário nem senha. Todas as funcionalidades estão abertas na própria página.
+O projeto **não possui autenticação**: não há usuário nem senha. Basta abrir a página.
 
-## Funcionalidades e onde estão no código
+Para testar rapidamente: na seção **Biblioteca**, clique em **Carregar 3 exemplos** (ou use **Gerar exemplo** no formulário de captura).
+
+## Funcionalidades
+
+| Funcionalidade | Como usar |
+| --- | --- |
+| Nova captura | Seção *Capturar*: título, matéria, conteúdo e álbum (opcional) |
+| Central de conteúdo | Seção *Biblioteca*: busca geral, filtro por matéria, ordenação e destaque **Recente** nas 3 capturas mais novas |
+| Organização livre | Criar e excluir álbuns; mover cada captura entre álbuns pelo seletor do card |
+| Favoritas e edição | Estrela no card e botão *Editar* |
+| Histórico e estatísticas | Capturas por matéria (com %), gráfico dos últimos 7 dias e registro de atividades (adicionada, editada, excluída, restaurada) |
+| Lixeira | *Excluir* move para a lixeira; é possível restaurar, excluir de vez ou esvaziar |
+| Exportação | Botões *Exportar CSV* e *Exportar JSON* (exportam o que está filtrado na tela) |
+
+## Requisitos da atividade e onde estão no código
 
 | Requisito | Onde |
 | --- | --- |
-| Estrutura pai → filho (Cabeçalho, corpo, rodapé) | `src/App.jsx` renderiza `Header`, `main` (seções) e `Footer`; as seções usam componentes de `src/components/ui` |
-| `localStorage` | `src/hooks/useLocalStorage.js` — usado no **Simulador** (histórico de leituras) e no **Contato** (mensagens enviadas) |
-| `Math.random` / `Math.floor` | `src/utils/scan.js` (`randomInt`, `pickRandom`, `generateScan`) e `src/utils/protocol.js` (protocolo de 6 dígitos) |
-| `Math.round` / `Math.ceil` | `src/utils/scan.js` (`round1`, nota da leitura, minutos economizados) |
-| `Math.max` / `Math.min` / `Math.abs` | `src/utils/scan.js` (`calculateStats` e `lightScore`/`getPositionTip`) |
+| Componentes funcionais, pai → filho (cabeçalho, corpo, rodapé) | `src/App.jsx` guarda o estado e renderiza `Header`, as seções em `<main>` e `Footer`, passando dados e funções por props para `Hero`, `CaptureForm`, `Library` (→ `AlbumBar`, `ItemCard`), `StatsPanel` e `TrashPanel` |
+| `localStorage` | `src/hooks/useLocalStorage.js`, usado em `App.jsx` para capturas, álbuns e histórico de atividade (chaves `jovi-lens:items`, `jovi-lens:albums`, `jovi-lens:log`) |
+| `Math.random` / `Math.floor` | `src/utils/math.js`: `randomInt`, `pickRandom`, `pickManyRandom` (embaralhamento), `makeId`, `randomConfidence` |
+| `Math.round` / `Math.ceil` | `src/utils/math.js`: `round1`, `percent`, `readingMinutes` (tempo de leitura); `src/utils/stats.js` e `StatsPanel.jsx` (larguras das barras) |
+| `Math.max` / `Math.floor` (dias) | `src/utils/stats.js`: maior valor dos gráficos e quantos dias se passaram desde cada captura |
 
-### Simulador de leitura (seção nova)
+A confiança exibida em cada captura é **simulada** (sorteada entre 85% e 99,9%), pois o projeto não tem a câmera real.
 
-Ao clicar em **Escanear agora**, o app sorteia uma matéria, a confiança da IA, o foco e a luz. Cada leitura é salva no `localStorage` (máx. 50) e alimenta as estatísticas: total de leituras, confiança média, melhor/pior nota, matéria mais lida e minutos economizados. O botão **Limpar histórico** apaga os dados salvos.
-
-### Formulário de contato
-
-Valida os campos, gera um número de protocolo aleatório e guarda a mensagem no `localStorage` (não há back-end).
-
-Para limpar tudo manualmente: DevTools → Application → Local Storage → apague as chaves `jovi-lens:scans` e `jovi-lens:messages`.
+Para limpar os dados: DevTools → Application → Local Storage → apague as chaves `jovi-lens:*`.
 
 ## Estrutura de pastas
 
 ```
 src/
-├── assets/               # imagens
 ├── components/
-│   ├── layout/           # Header, Footer
-│   ├── sections/         # Hero, Solution, Audience, Gallery, Simulator, Team, Contact
-│   ├── simulator/        # ScanPanel, StatsGrid, ScanHistory, MeterRow
-│   └── ui/               # componentes reutilizáveis (Button, Phone, Corner, ...)
-├── data/                 # dados estáticos (equipe, navegação, público, simulador)
-├── hooks/                # useLocalStorage
-├── utils/                # funções com Math (scan.js, protocol.js)
+│   ├── capture/   CaptureForm
+│   ├── hero/      Hero
+│   ├── layout/    Header, Footer
+│   ├── library/   Library, AlbumBar, ItemCard
+│   ├── stats/     StatsPanel
+│   ├── trash/     TrashPanel
+│   └── ui/        Button, Badge, Section, EmptyState, BrandMark
+├── data/          constants.js (matérias, capturas de exemplo, chaves)
+├── hooks/         useLocalStorage.js
+├── utils/         math.js, stats.js, format.js, exportData.js
 ├── App.jsx
-├── index.css             # tokens do Tailwind (@theme)
+├── index.css      paleta de cores e fontes (Tailwind @theme)
 └── main.jsx
 ```
 
 ## Uso de Inteligência Artificial
 
-Foi utilizada a IA **Claude (Anthropic)** como apoio no desenvolvimento. A IA ajudou a montar a estrutura do projeto em Vite + React + Tailwind a partir dos componentes já escritos pela equipe, a criar a seção **Simulador** e seus componentes, o hook `useLocalStorage`, as funções com `Math` em `src/utils`, a integração do formulário de contato com o `localStorage`, além deste README. O código foi revisado, executado e testado pela equipe, e o front-end original (layout, componentes e estilos) é de autoria da equipe. A imagem da seção "Estudantes full-time" no repositório é uma imagem provisória gerada por script e deve ser substituída pela imagem original do protótipo.
+Foi utilizada a IA **Claude (Anthropic)** como apoio no desenvolvimento. A IA gerou a estrutura do projeto (Vite, React e Tailwind), os componentes, o hook `useLocalStorage`, as funções com `Math`, os textos de exemplo e este README, a partir dos requisitos da atividade e da paleta do protótipo. Também escreveu e executou testes automatizados no navegador (Playwright) para conferir busca, álbuns, edição, lixeira, persistência e exportação. O código deve ser lido, executado e compreendido pela equipe, que é responsável pelo que entrega.
 
 ## Equipe
 
