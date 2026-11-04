@@ -4,8 +4,7 @@ Aplicação web em **React** para guardar e organizar as capturas de estudo feit
 
 Este projeto usa o objetivo e a paleta de cores do protótipo das sprints anteriores e implementa o conteúdo do desafio: **central de conteúdo com busca**, **álbuns criados pelo usuário**, **histórico e estatísticas**, **lixeira com recuperação** e **exportação**.
 
-- **Repositório (GitHub):** `COLE_AQUI_O_LINK_DO_GITHUB`
-- **Deploy (Vercel):** `COLE_AQUI_O_LINK_DA_VERCEL`
+
 
 ## Tecnologias utilizadas
 
