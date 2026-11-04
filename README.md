@@ -4,7 +4,8 @@ Aplicação web em **React** para guardar e organizar as capturas de estudo feit
 
 Este projeto usa o objetivo e a paleta de cores do protótipo das sprints anteriores e implementa o conteúdo do desafio: **central de conteúdo com busca**, **álbuns criados pelo usuário**, **histórico e estatísticas**, **lixeira com recuperação** e **exportação**.
 
-
+- **Repositório (GitHub):** `https://github.com/p4ulo289/sprint-4-webdev`
+- **Deploy (Vercel):** `https://sprint-4-webdev-weld.vercel.app`
 
 ## Tecnologias utilizadas
 
