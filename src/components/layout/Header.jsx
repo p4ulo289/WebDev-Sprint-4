@@ -16,7 +16,7 @@ export default function Header({ trashCount }) {
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-5 py-3.5 md:px-10">
         <a href="#topo" className="flex items-center gap-2.5 font-bold tracking-tight">
           <BrandMark />
-          JOVI Lens
+          Tech Tech
         </a>
 
         <button
